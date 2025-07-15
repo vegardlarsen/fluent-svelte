@@ -2,7 +2,7 @@
 	import { Navbar } from "$site/lib";
 	import { IconButton, Tooltip } from "$lib";
 
-	import { dev } from "$app/env";
+	import { dev } from "$app/environment";
 
 	import "$lib/theme.css";
 
