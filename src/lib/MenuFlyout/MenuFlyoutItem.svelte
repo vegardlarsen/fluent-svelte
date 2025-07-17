@@ -66,6 +66,14 @@
 	const closeFlyout = getContext<(event: Event) => void>("closeFlyout");
 	const menuId = uid("fds-menu-flyout-submenu-");
 
+	// Determine the appropriate ARIA role based on variant and state
+	$: menuRole = variant === "radio" ? "menuitemradio" : 
+	             variant === "toggle" ? "menuitemcheckbox" :
+	             (selected || checked) ? "menuitemcheckbox" : "menuitem";
+	
+	// All menu roles are interactive and should be focusable
+	$: tabindex = disabled ? -1 : 0;
+
 	let menu: SvelteComponentTyped = null;
 	let subMenuQueue = {
 		open: false,
@@ -118,12 +126,12 @@
 
 {#if variant === "standard" || __depth}
 	<li
-		tabindex={disabled ? -1 : 0}
-		role="menuitem"
+		{...(tabindex !== undefined ? { tabindex } : {})}
+		role={menuRole}
 		aria-expanded={$$slots.flyout && !disabled && open}
 		aria-haspopup={$$slots.flyout && !disabled && open}
 		aria-controls={$$slots.flyout && !disabled && menuId}
-		aria-selected={selected || checked}
+		aria-checked={menuRole !== "menuitem" ? (selected || checked) : undefined}
 		class="menu-flyout-item type-{variant} {className}"
 		class:cascading
 		class:selected
