@@ -241,7 +241,7 @@ A slider is a control that lets the user select from a range of values by moving
 				<div
 					class="slider-tick"
 					style="--fds-slider-tick-percentage: {valueToPercentage(tick)}%"
-				/>
+				></div>
 			{/each}
 		</div>
 	{/if}

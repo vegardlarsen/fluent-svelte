@@ -117,7 +117,7 @@ Flyouts represent a control that displays lightweight UI that is either informat
 			bind:this={backdropElement}
 			onclick={e => e.stopPropagation()}
 			onmousedown={closeFlyout}
-		/>
+		></div>
 	{/if}
 </div>
 
