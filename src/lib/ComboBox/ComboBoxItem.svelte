@@ -4,11 +4,16 @@
 
 	let className = "";
 	export { className as class };
+	
+	// ComboBox items should be focusable when not disabled
+	$: tabindex = disabled ? -1 : 0;
 
 </script>
 
 <li
-	tabindex="0"
+	{...(tabindex !== undefined ? { tabindex } : {})}
+	role="option"
+	aria-selected={selected}
 	class="combo-box-item {className}"
 	class:selected
 	class:disabled
