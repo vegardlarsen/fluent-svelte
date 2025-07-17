@@ -21,7 +21,7 @@
 			{#each items as { href, name, icon }}
 				<a
 					{href}
-					sveltekit:prefetch
+					data-sveltekit-preload-data="hover"
 					class:selected={$page.url.pathname === href ||
 						($page.url.pathname.split("/").length > 1 &&
 							href.split("/").length > 1 &&
