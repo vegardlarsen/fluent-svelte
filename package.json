@@ -68,7 +68,7 @@
 		"svelte": "^5.36.5",
 		"svelte-check": "^4.2.2",
 		"svelte-codesandbox": "^1.0.0",
-		"svelte-preprocess": "^5.1.4",
+		"svelte-preprocess": "^6.0.3",
 		"svelte2tsx": "^0.7.40",
 		"tslib": "^2.8.1",
 		"typescript": "^5.8.3",
