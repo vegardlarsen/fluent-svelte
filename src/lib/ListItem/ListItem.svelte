@@ -27,6 +27,11 @@
 	const dispatch = createEventDispatcher();
 
 	$: if (selected) dispatch("select");
+	
+	// Determine if this list item should be focusable based on its role
+	$: interactiveRoles = ["option", "button", "menuitem"];
+	$: isInteractive = interactiveRoles.includes(role);
+	$: tabindex = disabled ? -1 : (isInteractive ? 0 : undefined);
 
 	function handleKeyDown({ key, target }) {
 		if (key === "Enter") target.click();
@@ -63,7 +68,7 @@ List Items display data stacked vertically in a single column. List Items work b
 	<li
 		onkeydown={handleKeyDown}
 		bind:this={element}
-		tabindex={disabled ? -1 : 0}
+		{...(tabindex !== undefined ? { tabindex } : {})}
 		aria-selected={selected}
 		class="list-item {className}"
 		class:selected
