@@ -17,7 +17,7 @@
 	class:disabled
 	class:out-of-range={outOfRange}
 	disabled={disabled || blackout}
-	aria-selected={selected}
+	aria-pressed={selected}
 	{...$$restProps}
 >
 	{#if header}
