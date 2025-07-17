@@ -85,6 +85,7 @@ Flyouts represent a control that displays lightweight UI that is either informat
 <div
 	class="flyout-wrapper {className}"
 	role="button"
+	tabindex="0"
 	aria-expanded={open}
 	aria-haspopup={open}
 	aria-controls={menuId}
