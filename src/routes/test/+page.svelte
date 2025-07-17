@@ -480,7 +480,6 @@
 	<div class="showcase-group">
 		<Tooltip text="test">
 			<div
-				tabindex={-1}
 				style="width:80px;height:80px;border:2px dotted var(--fds-divider-stroke-default);margin:0;"
 			></div>
 		</Tooltip>
