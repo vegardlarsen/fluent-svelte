@@ -123,7 +123,7 @@ The `tooltip` slot has three slot props: `value`, `prefix` and `suffix` which gr
 <Slider>
 	<svelte:fragment slot="tooltip" let:value let:prefix let:suffix>
 		{prefix}{value}{suffix}
-		<marquee>Custom HTML content!</marquee>
+		<span>Custom HTML content!</span>
 	</svelte:fragment>
 </Slider>
 ```

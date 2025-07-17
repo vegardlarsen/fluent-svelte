@@ -26,7 +26,9 @@ const config = {
 				[
 					examples,
 					{
-						ExampleComponent: "/src/site/lib/Example/Example.svelte"
+						defaults: {
+							Wrapper: "/src/site/lib/Example/Example.svelte"
+						}
 					}
 				]
 			],
