@@ -12,7 +12,7 @@ import { Slider } from "fluent-svelte";
 ```
 
 <Showcase columns={4} columnWidth="120px" repl="461bd056ac7b4c7a920354256560b0a4">
-    <div style="display: contents" onmousedown={e => e.stopPropagation()}>
+    <div style="display: contents" role="presentation" onmousedown={e => e.stopPropagation()}>
         <Slider />
         <Slider value={10000} step={10000} max={30000} ticks={[10000, 20000]} suffix="cm" />
         <Slider value={80} max={200} reverse />
