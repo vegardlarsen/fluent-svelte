@@ -13,6 +13,16 @@ import examples from "mdsvexamples";
 // import sveld from "vite-plugin-sveld";
 
 import { mdsvex } from "mdsvex";
+import Prism from "prismjs";
+import "prismjs/components/prism-javascript.js";
+import "prismjs/components/prism-typescript.js";
+import "prismjs/components/prism-jsx.js";
+import "prismjs/components/prism-tsx.js";
+import "prismjs/components/prism-css.js";
+import "prismjs/components/prism-scss.js";
+import "prismjs/components/prism-json.js";
+import "prismjs/components/prism-regex.js";
+import "prism-svelte";
 
 /** @type {import("@sveltejs/kit").Config} */
 const config = {
