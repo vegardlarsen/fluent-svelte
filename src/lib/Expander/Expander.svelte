@@ -65,7 +65,7 @@ Expanders are controls that display a header and a collapsable content area. The
 	bind:this={containerElement}
 	{...$$restProps}
 >
-	<svelte:element this="h">
+	<svelte:element this={`h${headingLevel}`}>
 		<div
 			role="button"
 			id={headerId}
