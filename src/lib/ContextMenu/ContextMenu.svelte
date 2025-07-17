@@ -79,6 +79,7 @@
 
 <div
 	class="context-menu-wrapper"
+	role="presentation"
 	oncontextmenu={handleContextMenu}
 	bind:this={wrapperElement}
 >
@@ -88,6 +89,8 @@
 			use:mountMenu
 			use:arrowNavigation={{ preventTab: true }}
 			use:externalMouseEvents={{ type: "mousedown" }}
+			role="menu"
+			tabindex="-1"
 			oncontextmenu={e => { e.preventDefault(); e.stopPropagation(); }}
 			bind:this={anchorElement}
 			onoutermousedown={() => (open = false)}
