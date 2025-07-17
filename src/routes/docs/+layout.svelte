@@ -64,7 +64,7 @@
 			<div class="docs-search">
 				<AutoSuggestBox
 					placeholder="Search Docs"
-					on:keydown={handleKeyDown}
+					onkeydown={handleKeyDown}
 					bind:open={searchFlyoutOpen}
 					bind:value={searchValue}
 					bind:selection={searchSelection}
@@ -73,7 +73,7 @@
 				>
 					<svelte:fragment slot="item-template" let:matches let:index let:id let:item>
 						<ListItem
-							on:click={() => handleSelection(index)}
+							onclick={() => handleSelection(index)}
 							tabindex={-1}
 							selected={searchSelection === index}
 							href="/docs{docsPages.filter(page =>

@@ -13,12 +13,12 @@
 	<aside class="navigation-view-pane" class:expanded>
 		<header class="navigation-view-pane-header">
 			{#if backButton}
-				<button type="button" on:click={() => dispatch("back")}>
+				<button type="button" onclick={() => dispatch("back")}>
 					{"<-"}
 				</button>
 			{/if}
 			{#if menuButton}
-				<button type="button" on:click={() => (expanded = !expanded)}>
+				<button type="button" onclick={() => (expanded = !expanded)}>
 					{"-"}
 				</button>
 			{/if}

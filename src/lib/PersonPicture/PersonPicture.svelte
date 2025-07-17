@@ -31,7 +31,7 @@
 	{#if src && !error}
 		<img
 			bind:this={element}
-			on:error={() => (error = true)}
+			onerror={() => (error = true)}
 			class="person-picture {className}"
 			width={size}
 			height={size}

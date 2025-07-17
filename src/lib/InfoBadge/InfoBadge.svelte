@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { createEventForwarder } from "fluent-svelte/internal";
-	import { get_current_component } from "svelte/internal";
-
 	/** Indicates the severity color of the badge. */
 	export let severity: "attention" | "success" | "caution" | "critical" | "information" =
 		"attention";
@@ -13,7 +10,6 @@
 	/** Obtains a bound DOM reference to the badge's element. */
 	export let element: HTMLSpanElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component());
 	const svgProps = {
 		"aria-hidden": true,
 		xmlns: "http://www.w3.org/2000/svg"
@@ -31,7 +27,6 @@ InfoBadges are a non-intrusive and intuitive way to display notifications or bri
     ```
 -->
 <span
-	use:forwardEvents
 	bind:this={element}
 	class="info-badge severity-{severity} {className}"
 	{...$$restProps}

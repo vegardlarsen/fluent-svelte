@@ -6,6 +6,7 @@
 
 	export let tree = [];
 	export let __depth = 0;
+	export let onItemClick = null;
 
 	let treeViewState: any;
 
@@ -38,7 +39,7 @@
 					<ListItem
 						type="expander"
 						expanded={treeViewState?.[id(name)]}
-						on:click={e => toggleExpansion(e, name)}
+						onclick={e => toggleExpansion(e, name)}
 					>
 						<svelte:fragment slot="icon">
 							{@html icon || ""}
@@ -47,20 +48,20 @@
 					</ListItem>
 					{#if treeViewState?.[id(name)]}
 						<div class="subtree-items">
-							<svelte:self __depth={__depth + 1} tree={pages} />
+							<svelte:self __depth={__depth + 1} tree={pages} {onItemClick} />
 						</div>
 					{/if}
 				</div>
 			{:else}
 				<TextBlock class="category-header" variant="bodyStrong">{name}</TextBlock>
-				<svelte:self __depth={__depth + 1} tree={pages} />
+				<svelte:self __depth={__depth + 1} tree={pages} {onItemClick} />
 			{/if}
 		{:else}
 			<ListItem
-				on:click
 				type="navigation"
 				selected={`/docs${path}` === $page.url.pathname}
 				href="/docs{path}"
+				onclick={onItemClick ? (e) => onItemClick(e, { name, path, type, icon }) : undefined}
 			>
 				<svelte:fragment slot="icon">
 					{@html icon || ""}

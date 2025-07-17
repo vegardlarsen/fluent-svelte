@@ -43,7 +43,7 @@
 			{#each headings as { tagName, innerText, id }, i}
 				<li style="--fds-depth: {+tagName[1] - 1};">
 					<ListItem
-						on:click={e => handleClick(e, i, id)}
+						onclick={e => handleClick(e, i, id)}
 						selected={activeHeading === headings[i]}
 					>
 						{innerText}

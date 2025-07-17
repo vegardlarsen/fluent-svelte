@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, afterUpdate } from "svelte";
 	import { uid } from "$lib/internal";
 
 	import TextBox from "../TextBox/TextBox.svelte";
@@ -44,6 +44,7 @@
 
 	let focused = false;
 	let typedValue = "";
+	let mouseOverFlyout = false;
 
 	const dispatch = createEventDispatcher();
 	const flyoutId = uid("fds-auto-suggest-flyout-");
@@ -58,9 +59,44 @@
 		});
 	}
 
-	function handleInput() {
+	function handleInput(event) {
 		typedValue = inputElement.value;
-		if (focused && value && items.length > 0) open = true;
+		
+		if (focused && typedValue && items.length > 0) {
+			open = true;
+		}
+		
+		// Forward the input event to parent
+		dispatch('input', event);
+	}
+
+	// Use afterUpdate to attach event listeners directly to the input element
+	afterUpdate(() => {
+		if (inputElement) {
+			// Remove any existing listeners first
+			inputElement.removeEventListener('input', handleInput);
+			inputElement.removeEventListener('focus', handleFocus);
+			inputElement.removeEventListener('blur', handleBlur);
+			
+			// Add the listeners
+			inputElement.addEventListener('input', handleInput);
+			inputElement.addEventListener('focus', handleFocus);
+			inputElement.addEventListener('blur', handleBlur);
+		}
+	});
+
+	function handleFocus() {
+		focused = true;
+	}
+
+	function handleBlur() {
+		focused = false;
+		// Don't close if mouse is over the flyout
+		setTimeout(() => {
+			if (!mouseOverFlyout) {
+				open = false;
+			}
+		}, 100);
 	}
 
 	function handleKeyDown(event: KeyboardEvent) {
@@ -95,37 +131,15 @@
 		: ""}
 	aria-expanded={open && matches.length > 0}
 	aria-controls={flyoutId}
-	on:search={() => {
+	onsearch={() => {
 		if (open && matches.length > 0) value = matches[selection];
 	}}
-	on:search
-	on:input
-	on:input={handleInput}
-	on:outermousedown={() => (open = false)}
-	on:focus={() => (focused = true)}
-	on:focus
-	on:blur={() => (focused = false)}
-	on:blur
-	on:keydown={handleKeyDown}
-	on:keydown
-	on:change
-	on:beforeinput
-	on:click
-	on:dblclick
-	on:contextmenu
-	on:mousedown
-	on:mouseup
-	on:mouseover
-	on:mouseout
-	on:mouseenter
-	on:mouseleave
-	on:keypress
-	on:keyup
-	on:clear={() => {
+	onoutermousedown={() => (open = false)}
+	onkeydown={handleKeyDown}
+	onclear={() => {
 		typedValue = "";
 		if (items.length > 0) open = true;
 	}}
-	on:clear
 	bind:inputElement
 	bind:containerElement
 	bind:clearButtonElement
@@ -135,31 +149,39 @@
 	{...$$restProps}
 >
 	{#if open && matches.length > 0}
-		<ul id={flyoutId} role="listbox" class="auto-suggest-box-flyout" bind:this={flyoutElement}>
+		<ul id={flyoutId} role="listbox" class="auto-suggest-box-flyout" bind:this={flyoutElement}
+			onmouseenter={() => mouseOverFlyout = true}
+			onmouseleave={() => mouseOverFlyout = false}>
 			{#each matches as item, index (item)}
-				<div class="auto-suggest-item-wrapper">
-					<slot
-						name="item-template"
+				<slot
+					name="item-template"
+					id="{flyoutId}-item-{index}"
+					{value}
+					{matches}
+					{selection}
+					{item}
+					{index}
+				>
+					<ListItem
+						tabindex={-1}
 						id="{flyoutId}-item-{index}"
-						{value}
-						{matches}
-						{selection}
-						{item}
-						{index}
-					>
-						<ListItem
-							tabindex={-1}
-							id="{flyoutId}-item-{index}"
-							role="option"
-							on:click={() => {
-								value = matches[selection];
-								selection = index;
-								open = false;
-							}}
-							selected={selection === index}>{item}</ListItem
-						>
-					</slot>
-				</div>
+						role="option"
+						onclick={() => {
+							value = item;
+							typedValue = item;
+							selection = index;
+							open = false;
+							mouseOverFlyout = false;
+							// Focus back on the input and ensure it updates
+							setTimeout(() => {
+								if (inputElement) {
+									inputElement.focus();
+								}
+							}, 0);
+						}}
+						selected={selection === index}
+					>{item}</ListItem>
+				</slot>
 			{/each}
 		</ul>
 	{/if}

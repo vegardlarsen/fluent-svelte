@@ -106,10 +106,10 @@
 			<div class="example-app">
 				<TextBlock variant="display">{exampleCount}</TextBlock>
 				<div>
-					<Button variant="accent" on:click={() => (exampleCount += 1)}
+					<Button variant="accent" onclick={() => (exampleCount += 1)}
 						>Increase Count</Button
 					>
-					<Button on:click={() => (exampleCount = 0)}>Reset Count</Button>
+					<Button onclick={() => (exampleCount = 0)}>Reset Count</Button>
 				</div>
 			</div>
 		</HeroCard>

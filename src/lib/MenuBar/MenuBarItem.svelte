@@ -5,8 +5,8 @@
 
 	import { tabbable } from "tabbable";
 	import { createEventDispatcher, getContext, setContext } from "svelte";
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder, arrowNavigation, externalMouseEvents, uid } from "$lib/internal";
+	import { uid, externalMouseEvents, arrowNavigation } from "../internal";
+	
 
 	import MenuFlyoutSurface from "../MenuFlyout/MenuFlyoutSurface.svelte";
 
@@ -31,11 +31,6 @@
 
 	let menu: SvelteComponentTyped;
 
-	const forwardEvents = createEventForwarder(get_current_component(), [
-		"open",
-		"close",
-		"select"
-	]);
 	const dispatch = createEventDispatcher();
 	const menuId = uid("fds-menu-flyout-anchor-");
 	const handleSideNavigation =
@@ -95,10 +90,9 @@
 	});
 </script>
 
-<svelte:window on:keydown={handleEscapeKey} />
+<svelte:window onkeydown={handleEscapeKey} />
 
 <li
-	use:forwardEvents
 	class="menu-bar-item {className}"
 	class:disabled
 	role="menuitem"
@@ -107,11 +101,15 @@
 	aria-haspopup={$$slots.flyout && !disabled && open}
 	aria-controls={$$slots.flyout && !disabled && menuId}
 	bind:this={element}
-	on:keydown={event => handleSideNavigation(event, element)}
-	on:keydown|self={handleKeyDown}
-	on:focus={handleFocus}
-	on:mousedown={() => (open = !open)}
-	on:mouseenter={handleMouseEnter}
+	onkeydown={(event) => {
+		handleSideNavigation(event, element);
+		if (event.target === event.currentTarget) {
+			handleKeyDown(event);
+		}
+	}}
+	onfocus={handleFocus}
+	onmousedown={() => (open = !open)}
+	onmouseenter={handleMouseEnter}
 	{...$$restProps}
 >
 	<slot />
@@ -120,7 +118,7 @@
 			class="menu-flyout-anchor"
 			use:arrowNavigation={{ preventTab: true }}
 			use:externalMouseEvents={{ type: "mousedown", stopPropagation: true }}
-			on:outermousedown={() => (open = false)}
+			onoutermousedown={() => (open = false)}
 			bind:this={anchorElement}
 		>
 			<MenuFlyoutSurface bind:element={menuElement} bind:this={menu}>

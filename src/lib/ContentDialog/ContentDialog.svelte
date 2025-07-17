@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { get_current_component } from "svelte/internal";
+	
 	import { fade, scale } from "svelte/transition";
 	import { circOut } from "svelte/easing";
-	import { uid, focusTrap, getCSSDuration, createEventForwarder } from "$lib/internal";
 
 	import TextBlock from "../TextBlock/TextBlock.svelte";
+	import { uid, focusTrap, getCSSDuration } from "$lib/internal";
 
 	/** Determines whether the dialog is open or not. */
 	export let open: boolean = false;
@@ -44,12 +44,6 @@
 	/** Obtains a bound DOM reference to the dialog's footer element. */
 	export let footerElement: HTMLElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component(), [
-		"open",
-		"close",
-		"backdropclick",
-		"backdropmousedown"
-	]);
 	const dispatch = createEventDispatcher();
 	const titleId = uid("fds-dialog-title-");
 	const bodyId = uid("fds-dialog-body-");
@@ -70,23 +64,34 @@
 	function handleEscapeKey({ key }: KeyboardEvent) {
 		if (key === "Escape" && open && closable) close();
 	}
+
+	function handleBackdropClick(e: MouseEvent) {
+		if (e.target === e.currentTarget) {
+			dispatch("backdropclick", e);
+		}
+	}
+
+	function handleBackdropMouseDown(e: MouseEvent) {
+		if (e.target === e.currentTarget) {
+			dispatch("backdropmousedown", e);
+		}
+	}
 </script>
 
-<svelte:window on:keydown={handleEscapeKey} />
+<svelte:window onkeydown={handleEscapeKey} />
 
 {#if open}
 	<div
 		class="content-dialog-smoke"
 		class:darken
-		on:click|self={e => dispatch("backdropclick", e)}
-		on:mousedown|self={e => dispatch("backdropmousedown", e)}
+		onclick={handleBackdropClick}
+		onmousedown={handleBackdropMouseDown}
 		transition:fade|local={{ duration: getCSSDuration("--fds-control-faster-duration") }}
 		use:mountDialog
 		use:_focusTrap
 		bind:this={backdropElement}
 	>
 		<div
-			use:forwardEvents
 			class="content-dialog size-{size} {className}"
 			role="dialog"
 			aria-modal="true"

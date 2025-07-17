@@ -58,8 +58,8 @@ While you <i>can</i> use the <code>number</code> type with TextBox, it's probabl
 
 Most of these types will simply set the `type` attribute of the TextBox's input element. Some of these types, however, have additional functionality added specific to their input method.
 
--   On `search` types - A search button will be added to the end of the TextBox to allow users to submit a search query. You can use the `on:search` event to handle the search query. If you wish to hide the search button when using this type, you can set the `searchButton` property to `false`.
--   On `password` types - A password reveal button will be added to the end of the TextBox to allow users to reveal the input's value. You can use the `on:reveal` event to run code when the password is revealed. If you wish to hide the reveal button when using this type, you can set the `revealButton` property to `false`.
+-   On `search` types - A search button will be added to the end of the TextBox to allow users to submit a search query. You can use the `onsearch` event to handle the search query. If you wish to hide the search button when using this type, you can set the `searchButton` property to `false`.
+-   On `password` types - A password reveal button will be added to the end of the TextBox to allow users to reveal the input's value. You can use the `onreveal` event to run code when the password is revealed. If you wish to hide the reveal button when using this type, you can set the `revealButton` property to `false`.
 
 ### Placeholders
 
@@ -75,9 +75,9 @@ TextBox supports a `placeholder` property that will be displayed as text in lowe
 
 ### Buttons
 
-TextBox supports a set of buttons that are added to the end of it's container. These buttons can be used to perform actions on the TextBox's value. [Depending on the `type` of the TextBox, these buttons may vary with different functionality and behavior](#textbox-types).
+TextBox supports a set of buttons that are added to the end of its container. These buttons can be used to perform actions on the TextBox's value. [Depending on the `type` of the TextBox, these buttons may vary with different functionality and behavior](#textbox-types).
 
-Most TextBox types will feature a clear button. This button will clear the TextBox's value, then focus the input when clicked. If you wish to hide this button, you can set the `clearButton` property to `false`. If you wish to run any code after the clear button is used, you can also handle the `on:clear` event.
+Most TextBox types will feature a clear button. This button will clear the TextBox's value, then focus the input when clicked. If you wish to hide this button, you can set the `clearButton` property to `false`. If you wish to run any code after the clear button is used, you can also handle the `onclear` event.
 
 Along with the builtin action buttons, you can also add your own buttons to the end of the TextBox using the `TextBoxButton` component and the TextBox's `buttons` slot:
 
@@ -87,7 +87,7 @@ Along with the builtin action buttons, you can also add your own buttons to the 
 </script>
 
 <TextBox placeholder="Custom buttons!">
-	<TextBoxButton slot="buttons" on:click={() => alert("Clicked!")}>
+	<TextBoxButton slot="buttons" onclick={() => alert("Clicked!")}>
 		<!-- https://github.com/microsoft/fluentui-system-icons -->
 		<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 			<path

@@ -9,8 +9,6 @@
 </script>
 
 <button
-	on:click
-	on:keydown
 	type="button"
 	class="calendar-view-item type-{variant === 'day' ? 'day' : 'month-year'}"
 	class:selected

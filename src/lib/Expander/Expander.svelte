@@ -2,9 +2,8 @@
 	// TODO: progressively enhance this
 
 	import { createEventDispatcher } from "svelte";
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder, uid } from "$lib/internal";
-
+	import { uid } from "../internal";
+	
 	/** Determines whether the expander is expanded (open) or not. */
 	export let expanded = false;
 
@@ -29,7 +28,6 @@
 	export let contentElement: HTMLDivElement = null;
 
 	const dispatch = createEventDispatcher();
-	const forwardEvents = createEventForwarder(get_current_component(), ["expand", "collapse"]);
 	const headerId = uid("fds-expander-header-");
 	const contentId = uid("fds-expander-content-");
 
@@ -61,7 +59,6 @@ Expanders are controls that display a header and a collapsable content area. The
     ```
 -->
 <div
-	use:forwardEvents
 	class="expander direction-{direction} {className}"
 	role="region"
 	class:expanded
@@ -77,8 +74,8 @@ Expanders are controls that display a header and a collapsable content area. The
 			aria-expanded={expanded}
 			tabindex="0"
 			bind:this={headerElement}
-			on:keydown={handleKeydown}
-			on:click={() => (expanded = !expanded)}
+			onkeydown={handleKeydown}
+			onclick={() => (expanded = !expanded)}
 		>
 			{#if $$slots.icon}
 				<div class="expander-icon">

@@ -9,21 +9,8 @@
 
 <div
 	class="hero-card {className}"
-	on:click
-	on:blur
-	on:focus
-	on:dblclick
-	on:contextmenu
-	on:mousedown
-	on:mouseup
-	on:mouseover
-	on:mouseout
-	on:mouseenter
-	on:mouseleave
-	on:keypress
-	on:keydown
-	on:keyup
 	bind:this={element}
+	{...$$restProps}
 >
 	<header>
 		<slot name="header" />

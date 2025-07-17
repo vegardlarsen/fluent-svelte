@@ -19,7 +19,7 @@ import { ProgressRing } from "fluent-svelte";
         <ProgressRing bind:value />
     </div>
     <NumberBox
-        on:mousedown={e => e.stopPropagation()}
+        onmousedown={e => e.stopPropagation()}
         class="example-ring-input"
         placeholder="%"
         clearButton={false}

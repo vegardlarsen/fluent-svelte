@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { get_current_component } from "svelte/internal";
-	import { externalMouseEvents, createEventForwarder } from "$lib/internal";
+	import { externalMouseEvents } from "$lib/internal";
 
 	import TextBoxButton from "../TextBox/TextBoxButton.svelte";
 
@@ -66,12 +65,6 @@
 	export let revealButtonElement: HTMLButtonElement = null;
 
 	const dispatch = createEventDispatcher();
-	const forwardEvents = createEventForwarder(get_current_component(), [
-		"clear",
-		"search",
-		"reveal",
-		"outermousedown"
-	]);
 
 	function handleClear(event) {
 		dispatch("clear", event);
@@ -122,33 +115,34 @@ The TextBox control lets a user type text into an app. The text displays on the 
 	bind:this={containerElement}
 	use:externalMouseEvents={{ type: "mousedown" }}
 	on:outermousedown
+	{...$$restProps}
 >
 	<!-- Dirty workaround for the fact that svelte can't handle two-way binding when the input type is dynamic. -->
 	<!-- prettier-ignore -->
 	{#if type === "text"}
-		<input type="text" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="text" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "number"}
-		<input type="number" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="number" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "search"}
-		<input type="search" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="search" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "password"}
-		<input type="password" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="password" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "email"}
-		<input type="email" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="email" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "tel"}
-		<input type="tel" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="tel" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "url"}
-		<input type="url" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="url" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "date"}
-		<input type="date" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="date" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "datetime-local"}
-		<input type="datetime-local" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="datetime-local" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "month"}
-		<input type="month" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="month" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "time"}
-		<input type="time" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="time" bind:value bind:this={inputElement} {...inputProps} />
 		{:else if type === "week"}
-		<input type="week" bind:value bind:this={inputElement} use:forwardEvents {...inputProps} />
+		<input type="week" bind:value bind:this={inputElement} {...inputProps} />
 	{/if}
 	<div class="text-box-underline" />
 	<div class="text-box-buttons" bind:this={buttonsContainerElement}>
@@ -157,7 +151,7 @@ The TextBox control lets a user type text into an app. The text displays on the 
 				<TextBoxButton
 					class="text-box-clear-button"
 					aria-label="Clear value"
-					on:click={handleClear}
+					onclick={handleClear}
 					bind:element={clearButtonElement}
 				>
 					<svg
@@ -177,7 +171,7 @@ The TextBox control lets a user type text into an app. The text displays on the 
 			{#if type === "search" && searchButton}
 				<TextBoxButton
 					aria-label="Search"
-					on:click={handleSearch}
+					onclick={handleSearch}
 					bind:element={searchButtonElement}
 				>
 					<svg
@@ -197,7 +191,7 @@ The TextBox control lets a user type text into an app. The text displays on the 
 			{#if type === "password" && value && revealButton}
 				<TextBoxButton
 					aria-label="Reveal password"
-					on:mousedown={handleReveal}
+					onmousedown={handleReveal}
 					bind:element={revealButtonElement}
 				>
 					<svg

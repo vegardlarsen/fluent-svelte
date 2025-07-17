@@ -15,7 +15,7 @@ import { CalendarView } from "fluent-svelte";
 ```
 
 <Showcase style="block-size: 480px">
-    <CalendarView on:keydown={e => e.stopPropagation()} on:dblclick={e => e.stopPropagation()} on:mousedown={e => e.stopPropagation()} />
+    <CalendarView onkeydown={e => e.stopPropagation()} ondblclick={e => e.stopPropagation()} onmousedown={e => e.stopPropagation()} />
 </Showcase>
 
 ## Usage
@@ -43,7 +43,7 @@ You can also use two-way binding to programatically work with the value of the c
 
 Current value: {value?.toLocaleDateString()}
 
-<Button on:click={() => (value = null)}>Clear Value</Button>
+<Button onclick={() => (value = null)}>Clear Value</Button>
 ```
 
 ### Multiple Selections

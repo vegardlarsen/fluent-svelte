@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder } from "$lib/internal";
-
 	/** Controls whether the checkbox is checked or not. */
 	export let checked = false;
 
@@ -24,7 +21,6 @@
 	/** Obtains a bound DOM reference to the checkbox's outer container element. */
 	export let containerElement: HTMLLabelElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component());
 </script>
 
 <!--
@@ -40,7 +36,6 @@ Checkboxes represent a control that a user can select (check) or clear (uncheck)
 <label class="checkbox-container" class:disabled class:indeterminate bind:this={containerElement}>
 	<div class="checkbox-inner">
 		<input
-			use:forwardEvents
 			bind:checked
 			bind:indeterminate
 			bind:this={inputElement}

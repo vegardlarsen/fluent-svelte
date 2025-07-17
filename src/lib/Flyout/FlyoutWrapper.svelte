@@ -80,15 +80,15 @@ Flyouts represent a control that displays lightweight UI that is either informat
     ```
 -->
 
-<svelte:window on:keydown={handleEscapeKey} />
+<svelte:window onkeydown={handleEscapeKey} />
 
 <div
 	class="flyout-wrapper {className}"
 	aria-expanded={open}
 	aria-haspopup={open}
 	aria-controls={menuId}
-	on:click={() => (open = !open)}
-	on:keydown={handleKeyDown}
+	onclick={() => (open = !open)}
+	onkeydown={handleKeyDown}
 	bind:this={wrapperElement}
 >
 	<slot />
@@ -103,7 +103,7 @@ Flyouts represent a control that displays lightweight UI that is either informat
 				easing: circOut
 			}}
 			bind:this={anchorElement}
-			on:click={e => e.stopPropagation()}
+			onclick={e => e.stopPropagation()}
 			{...$$restProps}
 		>
 			<slot name="override">
@@ -115,8 +115,8 @@ Flyouts represent a control that displays lightweight UI that is either informat
 		<div
 			class="flyout-backdrop"
 			bind:this={backdropElement}
-			on:click={e => e.stopPropagation()}
-			on:mousedown={closeFlyout}
+			onclick={e => e.stopPropagation()}
+			onmousedown={closeFlyout}
 		/>
 	{/if}
 </div>

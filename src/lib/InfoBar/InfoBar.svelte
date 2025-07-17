@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder } from "$lib/internal";
+	
 
 	import InfoBadge from "../InfoBadge/InfoBadge.svelte";
 
@@ -44,7 +43,6 @@
 	let clientHeight = 0;
 
 	const dispatch = createEventDispatcher();
-	const forwardEvents = createEventForwarder(get_current_component());
 
 	$: actionWrapped = clientHeight && actionElement?.offsetTop > 0;
 	$: messageWrapped = clientHeight && messageElement?.offsetTop > titleElement?.offsetTop;
@@ -67,7 +65,6 @@ The InfoBar control is for displaying app-wide status messages to users that are
 -->
 {#if open}
 	<div
-		use:forwardEvents
 		bind:this={element}
 		bind:clientHeight
 		class="info-bar severity-{severity} {className}"
@@ -108,7 +105,7 @@ The InfoBar control is for displaying app-wide status messages to users that are
 				class="info-bar-close-button"
 				type="button"
 				aria-label="Close"
-				on:click={() => (open = false)}
+				onclick={() => (open = false)}
 				bind:this={closeButtonElement}
 			>
 				<svg

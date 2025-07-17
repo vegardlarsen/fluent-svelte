@@ -67,7 +67,7 @@ You can also use Svelte's two-way binding syntax to programatically open/close a
 
 <Flyout bind:open>
 	<Button>Open</Button>
-	<Button on:click={() => (open = false)} slot="flyout">Close</Button>
+	<Button onclick={() => (open = false)} slot="flyout">Close</Button>
 </Flyout>
 ```
 

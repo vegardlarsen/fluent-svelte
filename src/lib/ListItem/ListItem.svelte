@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder } from "$lib/internal";
+	
 
 	import TextBlock from "../TextBlock/TextBlock.svelte";
 
@@ -25,7 +24,6 @@
 	/** Obtains a bound DOM reference to the item's element. */
 	export let element: HTMLAnchorElement | HTMLLIElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component(), ["select"]);
 	const dispatch = createEventDispatcher();
 
 	$: if (selected) dispatch("select");
@@ -45,8 +43,7 @@ List Items display data stacked vertically in a single column. List Items work b
 -->
 {#if href && !disabled}
 	<a
-		use:forwardEvents
-		on:keydown={handleKeyDown}
+		onkeydown={handleKeyDown}
 		bind:this={element}
 		tabindex={disabled ? -1 : 0}
 		aria-selected={selected}
@@ -64,8 +61,7 @@ List Items display data stacked vertically in a single column. List Items work b
 	</a>
 {:else}
 	<li
-		use:forwardEvents
-		on:keydown={handleKeyDown}
+		onkeydown={handleKeyDown}
 		bind:this={element}
 		tabindex={disabled ? -1 : 0}
 		aria-selected={selected}

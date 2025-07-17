@@ -74,8 +74,8 @@
 		class="calendar-date-picker-calendar"
 		multiple={false}
 		__floating
-		on:keydown={handleKeyDown}
-		on:change={() => (open = false)}
+		onkeydown={handleKeyDown}
+		onchange={() => (open = false)}
 		bind:value
 		{...$$restProps}
 	/>

@@ -46,7 +46,10 @@
 		if (menuPosition.y < 0) menuPosition.y = 0;
 	}
 
-	async function handleContextMenu({ clientX, clientY }: MouseEvent) {
+	async function handleContextMenu(e: MouseEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		const { clientX, clientY } = e;
 		open = true;
 
 		mousePosition = {
@@ -72,12 +75,11 @@
 	});
 </script>
 
-<svelte:window on:keydown={handleEscapeKey} />
+<svelte:window onkeydown={handleEscapeKey} />
 
 <div
 	class="context-menu-wrapper"
-	on:contextmenu|preventDefault|stopPropagation={handleContextMenu}
-	on:contextmenu
+	oncontextmenu={handleContextMenu}
 	bind:this={wrapperElement}
 >
 	<slot />
@@ -86,9 +88,9 @@
 			use:mountMenu
 			use:arrowNavigation={{ preventTab: true }}
 			use:externalMouseEvents={{ type: "mousedown" }}
-			on:contextmenu|stopPropagation={e => e.preventDefault()}
+			oncontextmenu={e => { e.preventDefault(); e.stopPropagation(); }}
 			bind:this={anchorElement}
-			on:outermousedown={() => (open = false)}
+			onoutermousedown={() => (open = false)}
 			class="context-menu-anchor"
 			style="top: {menuPosition.y}px; left: {menuPosition.x}px;"
 		>

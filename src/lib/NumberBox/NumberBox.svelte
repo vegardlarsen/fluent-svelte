@@ -99,7 +99,7 @@
 	$: spinDownButtonDisabled = disabled || value?.toString() === min?.toString();
 </script>
 
-<svelte:window on:keydown={handleTabKey} />
+<svelte:window onkeydown={handleTabKey} />
 
 <TextBox
 	class="number-box {className ?? ''}"
@@ -109,26 +109,8 @@
 	bind:buttonsContainerElement
 	bind:clearButtonElement
 	bind:value
-	on:outermousedown={() => (spinnerFlyoutOpen = false)}
-	on:change
-	on:input
-	on:beforeinput
-	on:click
-	on:blur
-	on:focus={() => (spinnerFlyoutOpen = true)}
-	on:focus
-	on:dblclick
-	on:contextmenu
-	on:mousedown
-	on:mouseup
-	on:mouseover
-	on:mouseout
-	on:mouseenter
-	on:mouseleave
-	on:keypress
-	on:keydown
-	on:keyup
-	on:clear
+	onoutermousedown={() => (spinnerFlyoutOpen = false)}
+	onfocus={() => (spinnerFlyoutOpen = true)}
 	{min}
 	{max}
 	{step}
@@ -140,9 +122,9 @@
 		{#if inline}
 			{#if !disabled}
 				<TextBoxButton
-					on:mousedown={spinUp}
-					on:mouseup={stopSpinIntervals}
-					on:mouseleave={stopSpinIntervals}
+					onmousedown={spinUp}
+					onmouseup={stopSpinIntervals}
+					onmouseleave={stopSpinIntervals}
 					bind:element={spinUpButtonElement}
 					tabindex="-1"
 					aria-label="Increase number"
@@ -163,9 +145,9 @@
 					</svg>
 				</TextBoxButton>
 				<TextBoxButton
-					on:mousedown={spinDown}
-					on:mouseup={stopSpinIntervals}
-					on:mouseleave={stopSpinIntervals}
+					onmousedown={spinDown}
+					onmouseup={stopSpinIntervals}
+					onmouseleave={stopSpinIntervals}
 					bind:element={spinDownButtonElement}
 					tabindex="-1"
 					aria-label="Decrease number"
@@ -191,7 +173,7 @@
 				{disabled}
 				class="number-box-spinner-compact"
 				tabindex="-1"
-				on:mousedown={() => inputElement.focus()}
+				onmousedown={() => inputElement.focus()}
 			>
 				<svg
 					aria-hidden="true"
@@ -209,9 +191,9 @@
 			{#if spinnerFlyoutOpen}
 				<div class="number-box-spinner-flyout" bind:this={spinnerFlyoutElement}>
 					<TextBoxButton
-						on:mousedown={spinUp}
-						on:mouseup={stopSpinIntervals}
-						on:mouseleave={stopSpinIntervals}
+						onmousedown={spinUp}
+						onmouseup={stopSpinIntervals}
+						onmouseleave={stopSpinIntervals}
 						bind:element={spinUpButtonElement}
 						class="number-box-spinner"
 						disabled={spinUpButtonDisabled}
@@ -232,9 +214,9 @@
 						</svg>
 					</TextBoxButton>
 					<TextBoxButton
-						on:mousedown={spinDown}
-						on:mouseup={stopSpinIntervals}
-						on:mouseleave={stopSpinIntervals}
+						onmousedown={spinDown}
+						onmouseup={stopSpinIntervals}
+						onmouseleave={stopSpinIntervals}
 						bind:element={spinDownButtonElement}
 						tabindex="-1"
 						aria-label="Decrease number"

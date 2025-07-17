@@ -2,13 +2,13 @@
 	import type { SvelteComponentTyped } from "svelte";
 
 	import { createEventDispatcher, getContext } from "svelte";
-	import { get_current_component } from "svelte/internal";
+	
 
-	import { arrowNavigation, uid, createEventForwarder } from "$lib/internal";
 	import { tabbable } from "tabbable";
 
 	import MenuFlyoutSurface from "../MenuFlyout/MenuFlyoutSurface.svelte";
 	import TextBlock from "../TextBlock/TextBlock.svelte";
+	import { uid, arrowNavigation } from "$lib/internal";
 
 	/** Specifies an input type for the item. */
 	export let variant: "standard" | "radio" | "toggle" = "standard";
@@ -62,7 +62,6 @@
 	/** Obtains a bound DOM reference to the inner submenumenu element, which is present if the item is cascading and the submenu is visible. */
 	export let subMenuElement: HTMLUListElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component());
 	const dispatch = createEventDispatcher();
 	const closeFlyout = getContext<(event: Event) => void>("closeFlyout");
 	const menuId = uid("fds-menu-flyout-submenu-");
@@ -131,12 +130,11 @@
 		class:checked
 		class:disabled
 		class:indented
-		use:forwardEvents
 		bind:this={element}
-		on:click={close}
-		on:mouseenter={handleMouseEnter}
-		on:mouseleave={handleMouseLeave}
-		on:keydown={handleKeyDown}
+		onclick={close}
+		onmouseenter={handleMouseEnter}
+		onmouseleave={handleMouseLeave}
+		onkeydown={handleKeyDown}
 		{...$$restProps}
 	>
 		<slot name="icon" />
@@ -208,9 +206,6 @@
 			<input
 				type="radio"
 				hidden
-				on:change
-				on:input
-				on:beforeinput
 				bind:group
 				bind:this={inputElement}
 				{value}
@@ -221,13 +216,9 @@
 			<input
 				type="checkbox"
 				hidden
-				on:change
-				on:input
-				on:beforeinput
 				bind:this={inputElement}
-				bind:group
 				bind:checked
-				bind:value
+				{value}
 				{disabled}
 			/>
 		{/if}

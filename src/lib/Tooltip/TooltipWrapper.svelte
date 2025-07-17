@@ -54,6 +54,11 @@
 	function updateMousePosition({ clientX, clientY }) {
 		mousePosition.x = clientX;
 		mousePosition.y = clientY;
+
+		if (placement === "auto" && followCursor)
+		{
+			updateTooltipPositionAuto(wrapperElement.getBoundingClientRect())
+		}
 	}
 
 	function updateTooltipPositionAuto(wrapperPosition) {
@@ -78,19 +83,15 @@
 	}
 </script>
 
-<svelte:window on:scroll={destroyTooltip} />
+<svelte:window onscroll={destroyTooltip} />
 
 <div
 	class="tooltip-wrapper"
 	title={mounted ? undefined : text}
 	bind:this={wrapperElement}
-	on:mouseenter={mountTooltip}
-	on:mouseleave={destroyTooltip}
-	on:mousemove={updateMousePosition}
-	on:mousemove={() =>
-		placement === "auto" &&
-		followCursor &&
-		updateTooltipPositionAuto(wrapperElement.getBoundingClientRect())}
+	onmouseenter={mountTooltip}
+	onmouseleave={destroyTooltip}
+	onmousemove={updateMousePosition}
 >
 	<slot />
 

@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { createEventForwarder, TooltipSurface } from "$lib/internal";
 	import { createEventDispatcher } from "svelte";
-	import { get_current_component } from "svelte/internal";
-
+	import { TooltipSurface } from "../internal";
+	
 	/** The slider's current value. */
 	export let value = 0;
 
@@ -75,12 +74,6 @@
 	}
 
 	const dispatch = createEventDispatcher();
-	const forwardEvents = createEventForwarder(get_current_component(), [
-		"input",
-		"change",
-		"beforeinput"
-	]);
-
 	// Divides the current value minus the minimum value
 	// by the difference between the max and min values,
 	// and multiplies by 100 to get a percentage.
@@ -185,11 +178,11 @@
 </script>
 
 <svelte:window
-	on:mousemove={handleMove}
-	on:touchmove={handleMove}
-	on:mouseup={cancelMove}
-	on:touchend={cancelMove}
-	on:touchcancel={cancelMove}
+	onmousemove={handleMove}
+	ontouchmove={handleMove}
+	onmouseup={cancelMove}
+	ontouchend={cancelMove}
+	ontouchcancel={cancelMove}
 />
 
 <!--
@@ -201,13 +194,13 @@ A slider is a control that lets the user select from a range of values by moving
     ```
 -->
 <div
-	use:forwardEvents
-	on:mousedown|preventDefault={() => {
+	onmousedown={(e) => {
+		e.preventDefault();
 		holding = true;
 		dragging = true;
 	}}
-	on:touchstart={handleTouchStart}
-	on:keydown={handleArrowKeys}
+	ontouchstart={handleTouchStart}
+	onkeydown={handleArrowKeys}
 	tabindex={disabled ? -1 : 0}
 	style="--fds-slider-percentage: {percentage}%; --fds-slider-thumb-offset: {thumbClientWidth /
 		2 -

@@ -20,16 +20,16 @@ import { ContentDialog } from "fluent-svelte";
 ```
 
 <Showcase style="block-size: 360px;" repl="0fde4983fdc841d8b7320143ee3d50d7">
-    <Button on:click={() => open = true}>
+    <Button onclick={() => open = true}>
         Open
     </Button>
     <ContentDialog bind:open trapFocus={false} darken={false} title="Dialog Title">
         Some text
         <svelte:fragment slot="footer">
-            <Button variant="accent" on:click={() => open = false}>
+            <Button variant="accent" onclick={() => open = false}>
                 Button 1
             </Button>
-            <Button on:click={() => open = false}>
+            <Button onclick={() => open = false}>
                 Button 2
             </Button>
         </svelte:fragment>
@@ -55,11 +55,11 @@ If you wish to control a dialog opening from a trigger button, you can two-way b
 	let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open Dialog</Button>
+<Button onclick={() => (open = true)}>Open Dialog</Button>
 
 <ContentDialog bind:open>
 	I have been opened by a button click.
-	<Button on:click={() => (open = false)}>Close</Button>
+	<Button onclick={() => (open = false)}>Close</Button>
 </ContentDialog>
 ```
 
@@ -89,7 +89,7 @@ You can use the `footer` slot to insert various actions at the bottom of the dia
 </script>
 
 <ContentDialog bind:open title="Dialog with action">
-	<Button slot="footer" on:click={() => (open = false)}>Close Dialog</Button>
+	<Button slot="footer" onclick={() => (open = false)}>Close Dialog</Button>
 </ContentDialog>
 ```
 
@@ -111,7 +111,7 @@ Dialogs come in three sizes - `min`, `standard`, and `max`. You can set the dial
 The default behavior of a dialog is to open with a backdrop ("smoke") layer which prevents user interaction and darkens the contents of the page behind the dialog.
 
 -   You can disable backdrop darkening by setting the `darken` property to `false`.
--   You can configure the backdrop to close the dialog when it is clicked using the `on:backdropclick` and `on:backdropmousedown` events dispatched from the component.
+-   You can configure the backdrop to close the dialog when it is clicked using the `onbackdropclick` and `onbackdropmousedown` events dispatched from the component.
 
 ### Focus Behavior
 

@@ -9,9 +9,8 @@ import a11yEmoji from "@fec/remark-a11y-emoji";
 import slug from "rehype-slug";
 import github from "remark-github";
 import examples from "mdsvexamples";
-import examplesVite from "mdsvexamples/vite";
 
-import sveld from "vite-plugin-sveld";
+// import sveld from "vite-plugin-sveld";
 
 import { mdsvex } from "mdsvex";
 
@@ -36,21 +35,20 @@ const config = {
 		preprocess({
 			postcss: {
 				plugins: [autoprefixer(), cssnano(), prefixer({ prefix: "fds-" })]
+			},
+			scss: {
+				silenceDeprecations: ['legacy-js-api']
 			}
 		})
 	],
-	kit: {
-		adapter: vercel(),
-		vite: {
-			plugins: [sveld(), examplesVite],
-			resolve: {
-				extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", "svg"],
-				alias: {
-					$site: path.resolve("src/site"),
-					"fluent-svelte": path.resolve("src/lib")
-				}
-			}
+	compilerOptions: {
+		// Enable compatibility mode for Svelte 5 with Svelte 4 syntax
+		compatibility: {
+			componentApi: 4
 		}
+	},
+	kit: {
+		adapter: vercel()
 	}
 };
 

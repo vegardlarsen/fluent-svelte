@@ -2,9 +2,8 @@
 	import { createEventDispatcher, onMount, tick } from "svelte";
 	import { fly } from "svelte/transition";
 	import { circOut } from "svelte/easing";
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder, getCSSDuration } from "../internal";
-
+	
+	import { getCSSDuration } from "$lib/internal";
 	import CalendarViewItem from "./CalendarViewItem.svelte";
 
 	type View = "days" | "months" | "years";
@@ -69,7 +68,6 @@
 	export let element: HTMLDivElement = null;
 
 	const dispatch = createEventDispatcher();
-	const forwardEvents = createEventForwarder(get_current_component(), ["change"]);
 	const bodyElementBinding = node => (bodyElement = node); // bind:this breaks with our page transition for some reason
 
 	let header = "";
@@ -493,27 +491,26 @@ A calendar view lets a user view and interact with a calendar that they can navi
 <div
 	class="calendar-view {className}"
 	class:floating={__floating}
-	use:forwardEvents
 	bind:this={element}
 	{...$$restProps}
 >
 	<header class="calendar-view-header">
 		<div class="calendar-view-header-text" role="heading" aria-live="polite">
 			<button
-                on:click={() => updateView(view === "days" ? "months" : "years")}
+                onclick={() => updateView(view === "days" ? "months" : "years")}
                 type="button"
 				disabled={view === "years"}>{header}</button
 			>
 		</div>
 		<div class="calendar-view-pagination-controls">
-			<button type="button" disabled={view && min >= page} on:click={() => updatePage(-1)}>
+			<button type="button" disabled={view && min >= page} onclick={() => updatePage(-1)}>
 				<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 					<path
 						d="M4.95681 10.998C4.14912 10.998 3.67466 10.09 4.13591 9.42698L6.76854 5.64257C7.36532 4.78469 8.63448 4.7847 9.23126 5.64257L11.8639 9.42698C12.3251 10.09 11.8507 10.998 11.043 10.998H4.95681Z"
 					/>
 				</svg>
 			</button>
-			<button type="button" disabled={max < nextPage} on:click={() => updatePage(1)}>
+			<button type="button" disabled={max < nextPage} onclick={() => updatePage(1)}>
 				<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 					<path
 						d="M4.95681 5C4.14912 5 3.67466 5.90803 4.13591 6.57107L6.76854 10.3555C7.36532 11.2134 8.63448 11.2133 9.23126 10.3555L11.8639 6.57106C12.3251 5.90803 11.8507 5 11.043 5H4.95681Z"
@@ -607,8 +604,8 @@ A calendar view lets a user view and interact with a calendar that they can navi
 
 										<td role="gridcell">
 											<CalendarViewItem
-												on:click={() => selectDay(day)}
-												on:keydown={e => handleKeyDown(e, day)}
+												onclick={() => selectDay(day)}
+												onkeydown={e => handleKeyDown(e, day)}
 												outOfRange={!inMonth}
 												current={compareDates(day, new Date(), "day")}
 												disabled={min > day || max < day}
@@ -666,8 +663,8 @@ A calendar view lets a user view and interact with a calendar that they can navi
 
 											<td role="gridcell">
 												<CalendarViewItem
-													on:click={() => selectMonth(month)}
-													on:keydown={e => handleKeyDown(e, month)}
+													onclick={() => selectMonth(month)}
+													onkeydown={e => handleKeyDown(e, month)}
 													variant="monthYear"
 													outOfRange={!inYear}
 													current={compareDates(
@@ -720,8 +717,8 @@ A calendar view lets a user view and interact with a calendar that they can navi
 
 											<td role="gridcell">
 												<CalendarViewItem
-													on:click={() => selectYear(year)}
-													on:keydown={e => handleKeyDown(e, year)}
+													onclick={() => selectYear(year)}
+													onkeydown={e => handleKeyDown(e, year)}
 													variant="monthYear"
 													outOfRange={!inDecade}
 													current={compareDates(year, new Date(), "year")}

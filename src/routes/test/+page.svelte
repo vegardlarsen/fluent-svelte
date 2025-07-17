@@ -29,7 +29,7 @@
 		Tooltip
 	} from "$lib";
 
-	import { PageSection } from "$site/lib";
+	import { PageSection, TreeView } from "$site/lib";
 
 	import "$lib/theme.css";
 
@@ -46,6 +46,18 @@
 	import Share from "@fluentui/svg-icons/icons/share_16_regular.svg?raw";
 	import CopySelect from "@fluentui/svg-icons/icons/copy_select_20_regular.svg?raw";
 	import CameraEdit from "@fluentui/svg-icons/icons/camera_edit_20_regular.svg?raw";
+	import FolderRegular from "@fluentui/svg-icons/icons/folder_16_regular.svg?raw";
+	import DocumentRegular from "@fluentui/svg-icons/icons/document_16_regular.svg?raw";
+	import CodeRegular from "@fluentui/svg-icons/icons/code_16_regular.svg?raw";
+	import GlobeRegular from "@fluentui/svg-icons/icons/globe_16_regular.svg?raw";
+	import PhoneRegular from "@fluentui/svg-icons/icons/phone_16_regular.svg?raw";
+	import SettingsRegular from "@fluentui/svg-icons/icons/settings_16_regular.svg?raw";
+	import AppGenericRegular from "@fluentui/svg-icons/icons/app_generic_20_regular.svg?raw";
+	import MusicRegular from "@fluentui/svg-icons/icons/music_note_2_16_regular.svg?raw";
+	import ImageRegular from "@fluentui/svg-icons/icons/image_16_regular.svg?raw";
+	import VideoRegular from "@fluentui/svg-icons/icons/video_16_regular.svg?raw";
+	import DatabaseRegular from "@fluentui/svg-icons/icons/database_16_regular.svg?raw";
+	import ServerRegular from "@fluentui/svg-icons/icons/server_16_regular.svg?raw";
 
 	let progressRingValue = Math.floor(Math.random() * 101);
 
@@ -66,6 +78,197 @@
 	let menuGroup = 0;
 
 	let test1 = false;
+
+	let treeViewClickedItem = "None";
+
+	const sampleTreeData = [
+		{
+			name: "File Explorer",
+			type: "category", 
+			icon: FolderRegular,
+			pages: [
+				{
+					name: "Documents",
+					type: "category",
+					icon: FolderRegular,
+					pages: [
+						{
+							name: "Resume.pdf",
+							type: "page",
+							path: "#",
+							icon: DocumentRegular
+						},
+						{
+							name: "Cover Letter.docx",
+							type: "page",
+							path: "#",
+							icon: DocumentRegular
+						}
+					]
+				},
+				{
+					name: "Projects",
+					type: "category",
+					icon: FolderRegular,
+					pages: [
+						{
+							name: "Web Development",
+							type: "category",
+							icon: CodeRegular,
+							pages: [
+								{
+									name: "Portfolio Site",
+									type: "page",
+									path: "#",
+									icon: GlobeRegular
+								},
+								{
+									name: "E-commerce App",
+									type: "page", 
+									path: "#",
+									icon: AppGenericRegular
+								}
+							]
+						},
+						{
+							name: "Mobile Apps",
+							type: "page",
+							path: "#",
+							icon: PhoneRegular
+						}
+					]
+				},
+				{
+					name: "Media",
+					type: "category",
+					icon: FolderRegular,
+					pages: [
+						{
+							name: "Photos",
+							type: "category",
+							icon: ImageRegular,
+							pages: [
+								{
+									name: "Vacation 2024",
+									type: "page",
+									path: "#",
+									icon: ImageRegular
+								},
+								{
+									name: "Family Events",
+									type: "page",
+									path: "#",
+									icon: ImageRegular
+								}
+							]
+						},
+						{
+							name: "Videos",
+							type: "category",
+							icon: VideoRegular,
+							pages: [
+								{
+									name: "Tutorials",
+									type: "page",
+									path: "#",
+									icon: VideoRegular
+								}
+							]
+						},
+						{
+							name: "Music",
+							type: "page",
+							path: "#",
+							icon: MusicRegular
+						}
+					]
+				},
+				{
+					name: "Settings",
+					type: "page",
+					path: "#",
+					icon: SettingsRegular
+				}
+			]
+		},
+		{
+			name: "Development Environment",
+			type: "category",
+			icon: CodeRegular,
+			pages: [
+				{
+					name: "Database",
+					type: "category",
+					icon: DatabaseRegular,
+					pages: [
+						{
+							name: "Production",
+							type: "category",
+							icon: ServerRegular,
+							pages: [
+								{
+									name: "Users Table",
+									type: "page",
+									path: "#",
+									icon: DatabaseRegular
+								},
+								{
+									name: "Products Table",
+									type: "page",
+									path: "#",
+									icon: DatabaseRegular
+								}
+							]
+						},
+						{
+							name: "Development",
+							type: "category",
+							icon: DatabaseRegular,
+							pages: [
+								{
+									name: "Test Data",
+									type: "page",
+									path: "#",
+									icon: DatabaseRegular
+								}
+							]
+						}
+					]
+				},
+				{
+					name: "API Endpoints",
+					type: "category",
+					icon: ServerRegular,
+					pages: [
+						{
+							name: "User Management",
+							type: "page",
+							path: "#",
+							icon: ServerRegular
+						},
+						{
+							name: "Product Catalog",
+							type: "page",
+							path: "#",
+							icon: ServerRegular
+						}
+					]
+				},
+				{
+					name: "Configuration",
+					type: "page",
+					path: "#",
+					icon: SettingsRegular
+				}
+			]
+		}
+	];
+
+	function handleTreeViewClick(event, item) {
+		event.preventDefault();
+		treeViewClickedItem = item.name;
+		console.log("TreeView item clicked:", item);
+	}
 </script>
 
 <div style="height: 56px;" />
@@ -172,9 +375,7 @@
 	<div class="showcase-group">
 		<ProgressRing />
 		<ProgressRing bind:value={progressRingValue} />
-		<Button on:click={() => (progressRingValue = Math.floor(Math.random() * 101))}
-			>Randomize Value
-		</Button>
+		<Button onclick={() => progressRingValue = Math.floor(Math.random() * 101)}>Randomize Value</Button>
 	</div>
 	<div class="showcase-group">
 		<ProgressRing size={60} />
@@ -205,7 +406,7 @@
 	<h3>Flyout</h3>
 	<div class="showcase-group" style="display: flex; justify-content: center;">
 		<Flyout closable={false} bind:open={nonClosableFlyoutOpen}>
-			<Button variant="accent">Non-closasble Flyout</Button>
+			<Button variant="accent">Non-closable Flyout</Button>
 			<svelte:fragment slot="flyout">You can't close me >:)</svelte:fragment>
 		</Flyout>
 	</div>
@@ -317,7 +518,7 @@
 
 	<h3>Dialog</h3>
 	<div class="showcase-group">
-		<Button on:click={() => (dialogOpen = true)}>Open</Button>
+		<Button onclick={() => (dialogOpen = true)}>Open</Button>
 		<ContentDialog bind:open={dialogOpen} title="Add new alarm">
 			<div style="display: flex; flex-direction: column; gap: 12px; margin: 0;">
 				<TextBox placeholder="Alarm name" />
@@ -346,14 +547,14 @@
 			<svelte:fragment slot="footer">
 				<Button
 					variant="accent"
-					on:click={() => {
+					onclick={() => {
 						dialogOpen = false;
 						dialogResult = "Save";
 					}}
 					>Save
 				</Button>
 				<Button
-					on:click={() => {
+					onclick={() => {
 						dialogOpen = false;
 						dialogResult = "Cancel";
 					}}
@@ -368,7 +569,7 @@
 	<h3>Slider</h3>
 
 	<div class="showcase-group">
-		<Slider on:change={() => console.log("x")} />
+		<Slider onchange={() => console.log("x")} />
 		<Slider value={50} max={9000000} step={20} />
 		<Slider value={2500} min={1000} max={5000} />
 	</div>
@@ -681,7 +882,7 @@
 	<h3>Auto Suggest Box</h3>
 	<div class="showcase-group">
 		<AutoSuggestBox
-			on:select={() => console.log("hi")}
+			onselect={() => console.log("hi")}
 			placeholder="Search fruits"
 			items={[
 				"Apple",
@@ -722,6 +923,12 @@
 				{item}
 			</li>
 		</AutoSuggestBox>
+	</div>
+
+	<h3>TreeView</h3>
+	<div class="showcase-group" style="flex-direction: column; max-width: 300px;">
+		<TreeView tree={sampleTreeData} onItemClick={handleTreeViewClick} />
+		<p>Last clicked: {treeViewClickedItem}</p>
 	</div>
 </PageSection>
 

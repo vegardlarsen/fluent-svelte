@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder } from "$lib/internal";
-
 	/** Bindable value representing a group of radio inputs that the input will be bound to. */
 	export let group: any = undefined;
 
@@ -24,7 +21,6 @@
 	/** Obtains a bound DOM reference to the checkbox's outer container element. */
 	export let containerElement: HTMLLabelElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component());
 </script>
 
 <!--
@@ -45,7 +41,6 @@ Radio buttons, also called option buttons, let users select one option from a co
 -->
 <label class="radio-button-container" bind:this={containerElement}>
 	<input
-		use:forwardEvents
 		type="radio"
 		class="radio-button {className}"
 		bind:group

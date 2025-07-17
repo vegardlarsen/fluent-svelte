@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder } from "$lib/internal";
-
 	/** Controls whether the switch is toggled or not. */
 	export let checked = false;
 
@@ -21,7 +18,6 @@
 	/** Obtains a bound DOM reference to the switch's outer container element. */
 	export let containerElement: HTMLLabelElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component());
 </script>
 
 <!--
@@ -34,7 +30,6 @@ The toggle switch represents a physical switch that allows users to turn things 
 -->
 <label class="toggle-switch-container" bind:this={containerElement}>
 	<input
-		use:forwardEvents
 		class="toggle-switch {className}"
 		type="checkbox"
 		bind:checked

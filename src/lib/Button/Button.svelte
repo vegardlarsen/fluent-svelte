@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder } from "$lib/internal";
-
 	/** @restProps {button | a} */
 	/** Specifies the visual styling of the button. */
 	export let variant: "standard" | "accent" | "hyperlink" = "standard";
@@ -19,7 +16,6 @@
 	/** Obtains a bound DOM reference to the button or anchor element. */
 	export let element: HTMLElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component());
 </script>
 
 <!--
@@ -32,7 +28,6 @@ A button gives the user a way to trigger an immediate action. Some buttons are s
 -->
 <svelte:element
 	this={href && !disabled ? "a" : "button"}
-	use:forwardEvents
 	bind:this={element}
 	role={href && !disabled ? "button" : undefined}
 	href={href && !disabled ? href : undefined}

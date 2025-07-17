@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { createEventDispatcher, tick } from "svelte";
-	import { get_current_component, onMount } from "svelte/internal";
+	import { createEventDispatcher, tick, onMount } from "svelte";
+	import { uid, externalMouseEvents } from "$lib/internal";
 
-	import { createEventForwarder, externalMouseEvents, uid } from "$lib/internal";
 
 	import ComboBoxItem from "./ComboBoxItem.svelte";
 	import Button from "../Button/Button.svelte";
@@ -55,15 +54,6 @@
 	/** Obtains a bound DOM reference to the ComboBox's trigger button element. */
 	export let buttonElement: HTMLButtonElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component(), [
-		"open",
-		"close",
-		"select",
-		"change",
-		"input",
-		"beforeinput",
-		"keydown"
-	]);
 	const dispatch = createEventDispatcher();
 	const buttonId = uid("fds-combo-box-button-");
 	const dropdownId = uid("fds-combo-box-dropdown-");
@@ -220,13 +210,12 @@ When the combo box is closed, it either displays the current selection or is emp
     ```
 -->
 <div
-	use:forwardEvents
 	use:externalMouseEvents={{ type: "mousedown" }}
 	class="combo-box {className}"
 	class:disabled
 	class:editable
 	class:open
-	on:outermousedown={() => {
+	onoutermousedown={() => {
 		if (open) open = false;
 	}}
 	bind:this={containerElement}
@@ -244,14 +233,12 @@ When the combo box is closed, it either displays the current selection or is emp
 			aria-haspopup={open ? "listbox" : undefined}
 			bind:value={searchValue}
 			bind:inputElement={searchInputElement}
-			on:keydown={handleKeyboardNavigation}
-			on:input={handleInput}
-			on:focus={handleInputFocus}
-			on:blur={handleInputBlur}
-			on:change
-			on:input
-			on:beforeinput
-			on:keydown
+			onkeydown={handleKeyboardNavigation}
+			oninput={handleInput}
+			onfocus={handleInputFocus}
+			onblur={handleInputBlur}
+			onchange
+			onbeforeinput
 			{placeholder}
 			{disabled}
 		>
@@ -260,7 +247,7 @@ When the combo box is closed, it either displays the current selection or is emp
 				aria-label="Open dropdown"
 				aria-controls={dropdownId}
 				class="combo-box-dropdown-button"
-				on:click={openMenu}
+				onclick={openMenu}
 				bind:element={buttonElement}
 				slot="buttons"
 			>
@@ -287,9 +274,8 @@ When the combo box is closed, it either displays the current selection or is emp
 			aria-labelledby={buttonId}
 			aria-haspopup={open ? "listbox" : undefined}
 			aria-controls={dropdownId}
-			on:keydown={handleKeyboardNavigation}
-			on:keydown
-			on:click={openMenu}
+			onkeydown={handleKeyboardNavigation}
+			onclick={openMenu}
 			bind:element={buttonElement}
 			{disabled}
 		>
@@ -315,7 +301,7 @@ When the combo box is closed, it either displays the current selection or is emp
 		{#if open}
 			<ul
 				bind:this={menuElement}
-				on:blur={() => (open = false)}
+				onblur={() => (open = false)}
 				id={dropdownId}
 				aria-labelledby={buttonId}
 				aria-activedescendant={editable
@@ -333,8 +319,8 @@ When the combo box is closed, it either displays the current selection or is emp
 						selected={item.value === value}
 						disabled={item.disabled}
 						id="{dropdownId}-item-{i}"
-						on:keydown={handleKeyboardNavigation}
-						on:click={() => selectItem(item)}
+						onkeydown={handleKeyboardNavigation}
+						onclick={() => selectItem(item)}
 					>
 						{item.name}
 					</ComboBoxItem>
@@ -347,9 +333,9 @@ When the combo box is closed, it either displays the current selection or is emp
 			aria-hidden="true"
 			bind:this={inputElement}
 			bind:value
-			on:change
-			on:input
-			on:beforeinput
+			onchange={(e) => dispatch('change', e)}
+			oninput={(e) => dispatch('input', e)}
+			onbeforeinput={(e) => dispatch('beforeinput', e)}
 		/>
 		<slot />
 	{/if}

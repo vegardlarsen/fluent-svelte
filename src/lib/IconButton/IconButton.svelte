@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { get_current_component } from "svelte/internal";
-	import { createEventForwarder } from "$lib/internal";
-
 	/** @restProps {button | a} */
 	/** Sets an href value and converts the button element into an anchor. */
 	export let href = "";
@@ -16,7 +13,6 @@
 	/** Obtains a bound DOM reference to the button or anchor element. */
 	export let element: HTMLElement = null;
 
-	const forwardEvents = createEventForwarder(get_current_component());
 </script>
 
 <!--
@@ -33,7 +29,6 @@ An Icon Button is a clickable control that triggers an immediate action. Unlike 
 -->
 <svelte:element
 	this={href && !disabled ? "a" : "button"}
-	use:forwardEvents
 	bind:this={element}
 	role={href && !disabled ? "button" : undefined}
 	href={href && !disabled ? href : undefined}

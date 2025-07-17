@@ -9,7 +9,7 @@
 
 <TextBox class="copy-box" readonly {value} {...$$restProps}>
 	<svelte:fragment slot="buttons">
-		<TextBoxButton on:click={() => navigator.clipboard.writeText(value)}>
+		<TextBoxButton onclick={() => navigator.clipboard.writeText(value)}>
 			{@html Clipboard}
 		</TextBoxButton>
 		<slot name="buttons" />

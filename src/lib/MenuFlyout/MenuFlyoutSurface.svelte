@@ -7,6 +7,12 @@
 	export let element: HTMLUListElement = null;
 
 	let animationComplete = false;
+	
+	function handleAnimationEnd() {
+		if (!animationComplete) {
+			animationComplete = true;
+		}
+	}
 </script>
 
 <div
@@ -14,7 +20,7 @@
 	style={animationComplete ? "overflow: visible;" : undefined}
 >
 	<ul
-		on:animationend|once={() => (animationComplete = true)}
+		onanimationend={handleAnimationEnd}
 		class="menu-flyout {className}"
 		bind:this={element}
 		{...$$restProps}

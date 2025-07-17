@@ -90,7 +90,7 @@ InfoBars by default are `open`. This means that they are rendered into the DOM. 
 	let open = false;
 </script>
 
-<Button on:click={() => (open = !open)}>
+<Button onclick={() => (open = !open)}>
 	{open ? "Close" : "Open"}
 </Button>
 
