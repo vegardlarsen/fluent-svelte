@@ -194,6 +194,7 @@ A slider is a control that lets the user select from a range of values by moving
     ```
 -->
 <div
+	role="slider"
 	onmousedown={(e) => {
 		e.preventDefault();
 		holding = true;
