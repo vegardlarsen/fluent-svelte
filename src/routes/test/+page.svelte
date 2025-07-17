@@ -271,7 +271,7 @@
 	}
 </script>
 
-<div style="height: 56px;" />
+<div style="height: 56px;"></div>
 
 <PageSection>
 	<h2>fluent-svelte test page</h2>
@@ -482,7 +482,7 @@
 			<div
 				tabindex={-1}
 				style="width:80px;height:80px;border:2px dotted var(--fds-divider-stroke-default);margin:0;"
-			/>
+			></div>
 		</Tooltip>
 	</div>
 
@@ -803,7 +803,7 @@
 	<ContextMenu>
 		<div
 			style="background-color: var(--fds-solid-background-secondary); width: 200px; height: 200px;"
-		/>
+		></div>
 		<svelte:fragment slot="flyout">
 			<MenuFlyoutItem hint="Alt+Left arrow">
 				{@html ArrowLeft}

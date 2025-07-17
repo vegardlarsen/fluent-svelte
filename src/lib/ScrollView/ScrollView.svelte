@@ -1,4 +1,4 @@
-<div class="scroll-view" />
+<div class="scroll-view"></div>
 
 <style>
 	.scroll-view {

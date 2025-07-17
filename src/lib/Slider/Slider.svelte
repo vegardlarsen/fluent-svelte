@@ -231,7 +231,7 @@ A slider is a control that lets the user select from a range of values by moving
 
 	<div class="slider-rail" bind:this={railElement}>
 		{#if track}
-			<div class="slider-track" bind:this={trackElement} />
+			<div class="slider-track" bind:this={trackElement}></div>
 		{/if}
 	</div>
 

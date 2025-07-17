@@ -144,7 +144,7 @@ The TextBox control lets a user type text into an app. The text displays on the 
 		{:else if type === "week"}
 		<input type="week" bind:value bind:this={inputElement} {...inputProps} />
 	{/if}
-	<div class="text-box-underline" />
+	<div class="text-box-underline"></div>
 	<div class="text-box-buttons" bind:this={buttonsContainerElement}>
 		{#if !disabled}
 			{#if clearButton && value && !readonly}
