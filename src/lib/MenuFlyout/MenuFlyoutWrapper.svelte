@@ -66,6 +66,26 @@
 		if (closable) open = false;
 	}
 
+	function handleWrapperKeyDown(event: KeyboardEvent) {
+		if (event.key === "Enter" || event.key === " ") {
+			event.preventDefault();
+			toggleFlyout();
+		}
+	}
+
+	function handleBackdropKeyDown(event: KeyboardEvent) {
+		if (event.key === "Enter" || event.key === " ") {
+			event.preventDefault();
+			closeFlyout();
+		}
+	}
+
+	function handleMenuKeyDown(event: KeyboardEvent) {
+		if (event.key === "Enter" || event.key === " ") {
+			event.stopPropagation();
+		}
+	}
+
 	setContext("closeFlyout", event => {
 		dispatch("select");
 		if (closeOnSelect && closable) {
@@ -79,10 +99,13 @@
 
 <div
 	class="menu-flyout-wrapper {className}"
+	role="button"
+	tabindex="0"
 	aria-expanded={open}
 	aria-haspopup={open}
 	aria-controls={menuId}
 	onclick={toggleFlyout}
+	onkeydown={handleWrapperKeyDown}
 	bind:this={wrapperElement}
 >
 	<slot />
@@ -91,10 +114,12 @@
 			id={menuId}
 			class="menu-flyout-anchor placement-{placement} alignment-{alignment}"
 			style="--fds-menu-flyout-offset: {offset}px;"
+			role="menu"
 			tabindex="-1"
 			bind:this={anchorElement}
 			use:arrowNavigation={{ preventTab: true }}
 			onclick={e => e.stopPropagation()}
+			onkeydown={handleMenuKeyDown}
 		>
 			<MenuFlyoutSurface bind:element={menuElement} bind:this={menu} {...$$restProps}>
 				<slot name="flyout" />
@@ -102,10 +127,12 @@
 		</div>
 		<div
 			class="menu-flyout-backdrop"
+			role="presentation"
 			bind:this={backdropElement}
 			onclick={e => e.stopPropagation()}
 			onmousedown={closeFlyout}
-		/>
+			onkeydown={handleBackdropKeyDown}
+		></div>
 	{/if}
 </div>
 
