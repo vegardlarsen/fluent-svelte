@@ -87,6 +87,7 @@
 
 <div
 	class="tooltip-wrapper"
+	role="presentation"
 	title={mounted ? undefined : text}
 	bind:this={wrapperElement}
 	onmouseenter={mountTooltip}
