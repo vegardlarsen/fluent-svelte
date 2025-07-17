@@ -76,6 +76,15 @@
 			dispatch("backdropmousedown", e);
 		}
 	}
+
+	function handleBackdropKeyDown(e: KeyboardEvent) {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			if (e.target === e.currentTarget) {
+				dispatch("backdropclick", e);
+			}
+		}
+	}
 </script>
 
 <svelte:window onkeydown={handleEscapeKey} />
@@ -84,8 +93,10 @@
 	<div
 		class="content-dialog-smoke"
 		class:darken
+		role="presentation"
 		onclick={handleBackdropClick}
 		onmousedown={handleBackdropMouseDown}
+		onkeydown={handleBackdropKeyDown}
 		transition:fade|local={{ duration: getCSSDuration("--fds-control-faster-duration") }}
 		use:mountDialog
 		use:_focusTrap
