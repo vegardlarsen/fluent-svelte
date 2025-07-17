@@ -308,6 +308,7 @@ When the combo box is closed, it either displays the current selection or is emp
 					? undefined
 					: `${dropdownId}-item-${items.indexOf(selection)}`}
 				role="listbox"
+				tabindex="0"
 				class="combo-box-dropdown direction-{!editable
 					? menuGrowDirection ?? 'center'
 					: 'top'}"
