@@ -48,6 +48,7 @@
 		"@fluentui/svg-icons": "^1.1.306",
 		"@sveltejs/adapter-vercel": "^5.7.2",
 		"@sveltejs/kit": "^2.24.0",
+		"@sveltejs/package": "^2.3.7",
 		"@sveltejs/svelte-repl": "^0.4.1",
 		"@sveltejs/vite-plugin-svelte": "^6.1.0",
 		"@types/prismjs": "^1.26.5",
@@ -80,6 +81,22 @@
 		"focus-trap": "^7.6.5",
 		"sveld": "^0.22.1",
 		"tabbable": "^6.2.0"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"files": ["dist"],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		},
+		"./theme.css": "./dist/theme.css",
+		"./internal": {
+			"types": "./dist/internal.d.ts",
+			"default": "./dist/internal.js"
+		},
+		"./package.json": "./package.json"
 	},
 	"type": "module"
 }

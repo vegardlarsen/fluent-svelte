@@ -7,3 +7,4 @@ node_modules
 package-lock.json
 .vercel_build_output
 .vercel
+/dist
